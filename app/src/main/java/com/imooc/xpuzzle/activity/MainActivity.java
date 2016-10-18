@@ -32,6 +32,10 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.imooc.xpuzzle.activity.PuzzleMain.MTYPE;
+import static com.imooc.xpuzzle.activity.PuzzleMain.PICPATH;
+import static com.imooc.xpuzzle.activity.PuzzleMain.RESOURCEID;
+
 /**
  * 程序主界面：显示默认图片列表、自选图片按钮
  *
@@ -93,8 +97,8 @@ public class MainActivity extends Activity implements OnClickListener {
                     Intent intent = new Intent(
                             MainActivity.this,
                             PuzzleMain.class);
-                    intent.putExtra("picSelectedID", mResPicId[position]);
-                    intent.putExtra("mType", mType);
+                    intent.putExtra(RESOURCEID, mResPicId[position]);
+                    intent.putExtra(MTYPE, mType);
                     startActivity(intent);
                 }
             }
@@ -165,8 +169,8 @@ public class MainActivity extends Activity implements OnClickListener {
                 Intent intent = new Intent(
                         MainActivity.this,
                         PuzzleMain.class);
-                intent.putExtra("picPath", imagePath);
-                intent.putExtra("mType", mType);
+                intent.putExtra(PICPATH, imagePath);
+                intent.putExtra(MTYPE, mType);
                 cursor.close();
                 startActivity(intent);
             } else if (requestCode == RESULT_CAMERA) {
@@ -174,8 +178,8 @@ public class MainActivity extends Activity implements OnClickListener {
                 Intent intent = new Intent(
                         MainActivity.this,
                         PuzzleMain.class);
-                intent.putExtra("mPicPath", TEMP_IMAGE_PATH);
-                intent.putExtra("mType", mType);
+                intent.putExtra(PICPATH, TEMP_IMAGE_PATH);
+                intent.putExtra(MTYPE, mType);
                 startActivity(intent);
             }
         }

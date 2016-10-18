@@ -94,6 +94,11 @@ public class PuzzleMain extends Activity implements OnClickListener {
      */
     private TimerTask mTimerTask;
 
+
+    public final static String RESOURCEID = "picSelectedID";
+    public final static String PICPATH = "picPath";
+    public final static String MTYPE = "mType";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -101,17 +106,21 @@ public class PuzzleMain extends Activity implements OnClickListener {
         // 获取选择的图片
         Bitmap picSelectedTemp;
         // 选择默认图片还是自定义图片
-        mResId = getIntent().getExtras().getInt("picSelectedID");
-        mPicPath = getIntent().getExtras().getString("picPath");
+        mResId = getIntent().getExtras().getInt(RESOURCEID);
+        mPicPath = getIntent().getExtras().getString(PICPATH);
         if (mResId != 0) {
             picSelectedTemp = BitmapFactory.decodeResource(
                     getResources(), mResId);
         } else {
             picSelectedTemp = BitmapFactory.decodeFile(mPicPath);
         }
-        TYPE = getIntent().getExtras().getInt("mType", 2);
+        TYPE = getIntent().getExtras().getInt(MTYPE, 2);
         // 对图片处理
-        handlerImage(picSelectedTemp);
+        if (picSelectedTemp != null) {
+            handlerImage(picSelectedTemp);
+        }else {
+            finish();
+        }
         // 初始化Views
         initViews();
         // 生成游戏数据
