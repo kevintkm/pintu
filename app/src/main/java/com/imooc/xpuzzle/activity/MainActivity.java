@@ -131,10 +131,8 @@ public class MainActivity extends Activity implements OnClickListener {
                         if (0 == which) {
                             // 本地图册
                             Intent intent = new Intent(
-                                    Intent.ACTION_PICK, null);
-                            intent.setDataAndType(
-                                    MediaStore.Images.Media.EXTERNAL_CONTENT_URI,
-                                    IMAGE_TYPE);
+                                    Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                            intent.setType(IMAGE_TYPE);
                             startActivityForResult(intent, RESULT_IMAGE);
                         } else if (1 == which) {
                             // 系统相机
