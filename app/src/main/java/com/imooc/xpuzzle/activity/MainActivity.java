@@ -123,6 +123,7 @@ public class MainActivity extends Activity implements OnClickListener {
         AlertDialog.Builder builder = new AlertDialog.Builder(
                 MainActivity.this);
         builder.setTitle("选择：");
+
         builder.setItems(mCustomItems,
                 new DialogInterface.OnClickListener() {
 
