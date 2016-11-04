@@ -20,10 +20,13 @@ import android.widget.RelativeLayout.LayoutParams;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.request.animation.GlideAnimation;
+import com.bumptech.glide.request.target.SimpleTarget;
 import com.imooc.xpuzzle.R;
 import com.imooc.xpuzzle.adapter.GridItemsAdapter;
 import com.imooc.xpuzzle.bean.ItemBean;
 import com.imooc.xpuzzle.util.GameUtil;
+import com.imooc.xpuzzle.util.ImageLoaderUtil;
 import com.imooc.xpuzzle.util.ImagesUtil;
 import com.imooc.xpuzzle.util.ScreenUtil;
 
@@ -48,6 +51,8 @@ public class PuzzleMain extends Activity implements OnClickListener {
     public static int COUNT_INDEX = 0;
     // 计时显示
     public static int TIMER_INDEX = 0;
+    // 获取选择的图片
+    Bitmap picSelectedTemp;
     /**
      * UI更新Handler
      */
@@ -60,6 +65,10 @@ public class PuzzleMain extends Activity implements OnClickListener {
                     // 更新计时器
                     TIMER_INDEX++;
                     mTvTimer.setText("" + TIMER_INDEX);
+                    break;
+                case 2:
+                    picSelectedTemp = (Bitmap) msg.obj;
+                    init();
                     break;
                 default:
                     break;
@@ -103,24 +112,30 @@ public class PuzzleMain extends Activity implements OnClickListener {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.xpuzzle_puzzle_detail_main);
-        // 获取选择的图片
-        Bitmap picSelectedTemp;
         // 选择默认图片还是自定义图片
-        mResId = getIntent().getExtras().getInt(RESOURCEID);
         mPicPath = getIntent().getExtras().getString(PICPATH);
-        if (mResId != 0) {
-            picSelectedTemp = BitmapFactory.decodeResource(
-                    getResources(), mResId);
+        if (mPicPath != null && mPicPath.startsWith("http://")) {
+            ImageLoaderUtil.loadImage(this, mPicPath, new SimpleTarget<Bitmap>() {
+                @Override
+                public void onResourceReady(Bitmap resource, GlideAnimation<? super Bitmap> glideAnimation) {
+                    Message message = mHandler.obtainMessage();
+                    message.what = 2;
+                    message.obj = resource;
+                    mHandler.sendMessage(message);
+                }
+            });
         } else {
             picSelectedTemp = BitmapFactory.decodeFile(mPicPath);
         }
         TYPE = getIntent().getExtras().getInt(MTYPE, 2);
         // 对图片处理
         if (picSelectedTemp != null) {
-            handlerImage(picSelectedTemp);
-        }else {
-            finish();
+            init();
         }
+    }
+
+    private void init() {
+        handlerImage(picSelectedTemp);
         // 初始化Views
         initViews();
         // 生成游戏数据

@@ -9,6 +9,8 @@ import android.widget.BaseAdapter;
 import android.widget.GridView;
 import android.widget.ImageView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.imooc.xpuzzle.util.ImageLoaderUtil;
 import com.imooc.xpuzzle.util.ScreenUtil;
 
@@ -49,18 +51,20 @@ public class GridPicListAdapter extends BaseAdapter {
     public View getView(int position, View convertView, ViewGroup arg2) {
         ImageView iv_pic_item = null;
         int density = (int) ScreenUtil.getDeviceDensity(context);
+        int width = ScreenUtil.getScreenSize(context).widthPixels;
+        int height = ScreenUtil.getScreenSize(context).heightPixels;
         if (convertView == null) {
             iv_pic_item = new ImageView(context);
             // 设置布局 图片
             iv_pic_item.setLayoutParams(new GridView.LayoutParams(
-                    80 * density,
-                    100 * density));
+                    width/4-20*density,
+                    height/4-60 * density));
             // 设置显示比例类型
             iv_pic_item.setScaleType(ImageView.ScaleType.FIT_XY);
         } else {
             iv_pic_item = (ImageView) convertView;
         }
-        ImageLoaderUtil.loadImage(context,picList.get(position),iv_pic_item);
+        Glide.with(context).load(picList.get(position)).centerCrop().diskCacheStrategy(DiskCacheStrategy.ALL).into(iv_pic_item);
         return iv_pic_item;
     }
 }

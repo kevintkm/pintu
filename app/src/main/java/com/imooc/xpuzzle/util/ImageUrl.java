@@ -5,8 +5,8 @@ package com.imooc.xpuzzle.util;
  */
 
 public class ImageUrl {
-    public static final String url = "http://b166.photo.store.qq.com/psbe?/V12Vsc1B3YwIWu/Nm88w4G3teW602.tV8EMZkaM7d*7082UgvGLiVZWGWOjEavmGEUOAAH7aP6tDoTf/b/dKYAAAAAAAAA&bo=gALfBdAFpw0FBwM!&rf=viewer_4";
-    public static final String url1 = "http://b169.photo.store.qq.com/psbe?/V12Vsc1B3YwIWu/ZB5ae4QXXyBmZR76niXfRlU*pO.OW4EF8F5fuXx4Kx7PJJRmImTivJM9jmd5IFf1/b/dKkAAAAAAAAA&bo=IAMrBLAEQAYFB9o!&rf=viewer_4";
+    public static final String url = "http://a4.qpic.cn/psb?/V13QkHoD1XuqJn/CXSkJQ8aSxj5*G8QOyWRqMDSoch4W9QbA658BrXsRa0!/b/dAsBAAAAAAAA&ek=1&kp=1&pt=0&bo=fwLfBQAAAAAFB4M!&sce=60-2-2&rf=viewer_4";
+    public static final String url1 = "http://b247.photo.store.qq.com/psb?/V12Vsc1B3YwIWu/w5dc0c8ZC87xqsQqby2J2DuNX4sRGN2vbPLZba5Z*kQ!/b/dKyHSJNAEQAA&bo=gAJVAwAGAAgBAP0!&rf=viewer_4";
     public static final String url2 = "http://b268.photo.store.qq.com/psb?/V12Vsc1B3YwIWu/X8mhhu8xr3Wa*hrdjCtTpJRC3E4a6rk3a5pDc06G5RM!/b/dAwBAAAAAAAA&bo=gAc4BAAAAAAFAJg!&rf=viewer_4";
     public static final String url3 = "http://b218.photo.store.qq.com/psb?/V12Vsc1B3YwIWu/PvQWTkywB2IU5VOV5q7laCzdTWC33ePdlDAR.SbnEY8!/b/dNoAAAAAAAAA&bo=OASABwAAAAAFAJg!&rf=viewer_4";
     public static final String url4 = "http://b267.photo.store.qq.com/psb?/V12Vsc1B3YwIWu/e8nsFPjEqEgbnsvkjOxU292fS7IlddvnGHARmPBLJC4!/b/dAsBAAAAAAAA&bo=OASABwAAAAAFAJg!&rf=viewer_4";
@@ -18,7 +18,8 @@ public class ImageUrl {
     public static final String url9 = "http://b87.photo.store.qq.com/psb?/V12Vsc1B3kuYg9/qL*wDHxjX51BBIQDA7a4Qdidv1mmMDRUdSEtJYGGn4g!/b/YYC.3zPsIQAAYqvh5TMoIgAA&bo=OwIgAwAAAAABAD0!&rf=viewer_4";
     public static final String url10 = "http://b87.photo.store.qq.com/psb?/V12Vsc1B3kuYg9/RnTLJXrX1NMwMvUP0*v0z8DdXxc9hVjQDuDzcNPTGPY!/b/YSm83zNYIgAAYsd26jOgIgAA&bo=ngJPAQAAAAABAPU!&rf=viewer_4";
     public static final String url11 = "http://b82.photo.store.qq.com/psb?/V12Vsc1B3kuYg9/vadzrNiJ5N2ZfAPoM0GQ3.7cm5pjL9tyXd.SENi7uLI!/b/YQ2S9TAEiQAAYgfI4TB*igAA&bo=ngKeAgAAAAABACc!&rf=viewer_4";
-    public static final String url13 = "http://b350.photo.store.qq.com/psbe?/V12Vsc1B3YwIWu/J8ZE24m*.l9QzhV2395To00XRDCv1QTy85.JRYAwfWBCkxAAhBkAXB0gcFWOSaZI/b/dDZ9pdAaMgAA&bo=gAJxBAAAAAAFB9M!&rf=viewer_4";
+    public static final String url13 = "http://b3.photo.store.qq.com/psb?/V138CJgo2tuiml/*ny1GS05vRP12lGC6WazssH.ILCK4jwonIwOSQp*u4w!/b/dAMAAAAAAAAA&bo=gAJVAwAAAAAFB*A!&rf=viewer_4";
     public static final String url14 = "http://b147.photo.store.qq.com/psb?/V12Vsc1B3YwIWu/LRQ.NWJ4OLWAlrB93*dkNjceaqy7GIGfakDE9tFOTf4!/b/dFoxqVd4PAAA&bo=gAJVAwAAAAAFAPc!&rf=viewer_4";
     public static final String url12 = "http://b350.photo.store.qq.com/psb?/V12Vsc1B3YwIWu/4JfoaKtwCUxB1pzRQ229TDjDqzN8IeZ0JDz3I*C1JHo!/b/dGH.ptCTEAAA&bo=gAJVAwAAAAABAPM!&rf=viewer_4";
+    public static final String url15 = "https://wwc.alicdn.com/avatar/getAvatar.do?userId=1113215645&width=100&height=100&type=sns";
 }

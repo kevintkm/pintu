@@ -193,8 +193,8 @@ public class MainActivity extends Activity implements OnClickListener {
                 ImageUrl.url3, ImageUrl.url4, ImageUrl.url5,
                 ImageUrl.url6, ImageUrl.url7, ImageUrl.url8,
                 ImageUrl.url9, ImageUrl.url10, ImageUrl.url11,
-                ImageUrl.url12, ImageUrl.url3,
-                ImageUrl.url14};
+                ImageUrl.url12, ImageUrl.url13,
+                ImageUrl.url14 ,ImageUrl.url15};
         for (int i = 0; i < mResPicId.length; i++) {
             mPicList.add(mResPicId[i]);
         }
