@@ -24,7 +24,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:background="@drawable/textview_click"
             android:text="@string/puzzle_main_type_selected"
             android:textColor="@color/main_text"
             android:textSize="@dimen/text_title" />
@@ -37,10 +36,61 @@
         android:layout_below="@id/ll_puzzle_main_spinner"
         android:layout_centerHorizontal="true"
         android:layout_margin="@dimen/padding"
+        android:listSelector="@android:color/transparent"
         android:gravity="center_horizontal"
         android:horizontalSpacing="@dimen/padding"
         android:numColumns="4"
         android:padding="@dimen/padding"
         android:verticalSpacing="@dimen/padding" />
+    <View
+        android:id="@+id/layout_mask"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#7f000000"
+        android:visibility="gone" />
+
+    <LinearLayout
+        android:id="@+id/layout_wheel"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:orientation="vertical"
+        android:visibility="gone">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@android:color/white"
+            android:padding="10dip">
+
+            <TextView
+                android:id="@+id/tv_cancel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:gravity="center"
+                android:text="取消"
+                android:background="@drawable/btn_wheel_cancel_selector"
+                android:textColor="@android:color/white"
+                android:textSize="12sp" />
+
+            <TextView
+                android:id="@+id/tv_ok"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:gravity="center"
+                android:text="确定"
+                android:background="@drawable/btn_wheel_ok_selector"
+                android:textColor="@android:color/white"
+                android:textSize="12sp" />
+        </RelativeLayout>
+
+        <com.imooc.xpuzzle.wheelview.WheelView
+            android:id="@+id/wheel_sku"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
 
 </RelativeLayout>

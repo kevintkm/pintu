@@ -9,6 +9,7 @@ import android.widget.BaseAdapter;
 import android.widget.GridView;
 import android.widget.ImageView;
 
+import com.imooc.xpuzzle.util.ImageLoaderUtil;
 import com.imooc.xpuzzle.util.ScreenUtil;
 
 import java.util.List;
@@ -21,10 +22,10 @@ import java.util.List;
 public class GridPicListAdapter extends BaseAdapter {
 
     // 映射List
-    private List<Bitmap> picList;
+    private List<String> picList;
     private Context context;
 
-    public GridPicListAdapter(Context context, List<Bitmap> picList) {
+    public GridPicListAdapter(Context context, List<String> picList) {
         this.context = context;
         this.picList = picList;
     }
@@ -59,8 +60,7 @@ public class GridPicListAdapter extends BaseAdapter {
         } else {
             iv_pic_item = (ImageView) convertView;
         }
-        iv_pic_item.setBackgroundColor(color.black);
-        iv_pic_item.setImageBitmap(picList.get(position));
+        ImageLoaderUtil.loadImage(context,picList.get(position),iv_pic_item);
         return iv_pic_item;
     }
 }

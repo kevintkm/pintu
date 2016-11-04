@@ -7,26 +7,23 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
-import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
-import android.view.Gravity;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.GridView;
-import android.widget.PopupWindow;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.imooc.xpuzzle.R;
 import com.imooc.xpuzzle.adapter.GridPicListAdapter;
-import com.imooc.xpuzzle.util.ScreenUtil;
+import com.imooc.xpuzzle.adapter.WheelSkuAdapter;
+import com.imooc.xpuzzle.util.ImageUrl;
+import com.imooc.xpuzzle.wheelview.WheelView;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -53,17 +50,23 @@ public class MainActivity extends Activity implements OnClickListener {
     public static String TEMP_IMAGE_PATH;
     // GridView 显示图片
     private GridView mGvPicList;
-    private List<Bitmap> mPicList;
+    private List<String> mPicList;
     // 主页图片资源ID
-    private int[] mResPicId;
+    private String[] mResPicId;
     // 显示Type
-    private TextView mTvPuzzleMainTypeSelected;
-    private LayoutInflater mLayoutInflater;
-    private PopupWindow mPopupWindow;
-    private View mPopupView;
-    private TextView mTvType2;
-    private TextView mTvType3;
-    private TextView mTvType4;
+    private LinearLayout mTvPuzzleMainTypeSelected;
+
+
+    private TextView mTypeText;
+
+    private TextView tvCancel;
+    private TextView tvOk;
+    private WheelView wheelView;
+    private LinearLayout linearLayout;
+    private View mask;
+    private boolean isSku;
+    private List<String> types;
+
     // 游戏类型N*N
     private int mType = 2;
     // 本地图册、相机选择
@@ -77,7 +80,7 @@ public class MainActivity extends Activity implements OnClickListener {
         TEMP_IMAGE_PATH =
                 Environment.getExternalStorageDirectory().getPath() +
                         "/temp.png";
-        mPicList = new ArrayList<Bitmap>();
+        mPicList = new ArrayList<String>();
         // 初始化Views
         initViews();
         // 数据适配器
@@ -97,7 +100,7 @@ public class MainActivity extends Activity implements OnClickListener {
                     Intent intent = new Intent(
                             MainActivity.this,
                             PuzzleMain.class);
-                    intent.putExtra(RESOURCEID, mResPicId[position]);
+                    intent.putExtra(PICPATH, mResPicId[position]);
                     intent.putExtra(MTYPE, mType);
                     startActivity(intent);
                 }
@@ -107,22 +110,14 @@ public class MainActivity extends Activity implements OnClickListener {
         /**
          * 显示难度Type
          */
-        mTvPuzzleMainTypeSelected.setOnClickListener(
-                new OnClickListener() {
-
-                    @Override
-                    public void onClick(View v) {
-                        // 弹出popup window
-                        popupShow(v);
-                    }
-                });
+        mTvPuzzleMainTypeSelected.setOnClickListener(this);
     }
 
     // 显示选择系统图库 相机对话框
     private void showDialogCustom() {
         AlertDialog.Builder builder = new AlertDialog.Builder(
-                MainActivity.this);
-        builder.setTitle("选择：");
+                MainActivity.this,AlertDialog.THEME_DEVICE_DEFAULT_DARK);
+        builder.setTitle("选择图像来源：");
         builder.setItems(mCustomItems,
                 new DialogInterface.OnClickListener() {
 
@@ -185,30 +180,6 @@ public class MainActivity extends Activity implements OnClickListener {
         }
     }
 
-    /**
-     * 显示popup window
-     *
-     * @param view popup window
-     */
-    private void popupShow(View view) {
-        int density = (int) ScreenUtil.getDeviceDensity(this);
-        // 显示popup window
-        mPopupWindow = new PopupWindow(mPopupView,
-                200 * density, 50 * density);
-        mPopupWindow.setFocusable(true);
-        mPopupWindow.setOutsideTouchable(true);
-        // 透明背景
-        Drawable transpent = new ColorDrawable(Color.TRANSPARENT);
-        mPopupWindow.setBackgroundDrawable(transpent);
-        // 获取位置
-        int[] location = new int[2];
-        view.getLocationOnScreen(location);
-        mPopupWindow.showAtLocation(
-                view,
-                Gravity.NO_GRAVITY,
-                location[0] - 40 * density,
-                location[1] + 30 * density);
-    }
 
     /**
      * 初始化Views
@@ -217,34 +188,46 @@ public class MainActivity extends Activity implements OnClickListener {
         mGvPicList = (GridView) findViewById(
                 R.id.gv_xpuzzle_main_pic_list);
         // 初始化Bitmap数据
-        mResPicId = new int[]{
-                R.drawable.pic1, R.drawable.pic2, R.drawable.pic3,
-                R.drawable.pic4, R.drawable.pic5, R.drawable.pic6,
-                R.drawable.pic7, R.drawable.pic8, R.drawable.pic9,
-                R.drawable.pic10, R.drawable.pic11, R.drawable.pic12,
-                R.drawable.pic13, R.drawable.pic14,
-                R.drawable.pic15, R.mipmap.ic_launcher};
-        Bitmap[] bitmaps = new Bitmap[mResPicId.length];
-        for (int i = 0; i < bitmaps.length; i++) {
-            bitmaps[i] = BitmapFactory.decodeResource(
-                    getResources(), mResPicId[i]);
-            mPicList.add(bitmaps[i]);
+        mResPicId = new String[]{
+                ImageUrl.url, ImageUrl.url1, ImageUrl.url2,
+                ImageUrl.url3, ImageUrl.url4, ImageUrl.url5,
+                ImageUrl.url6, ImageUrl.url7, ImageUrl.url8,
+                ImageUrl.url9, ImageUrl.url10, ImageUrl.url11,
+                ImageUrl.url12, ImageUrl.url3,
+                ImageUrl.url14};
+        for (int i = 0; i < mResPicId.length; i++) {
+            mPicList.add(mResPicId[i]);
         }
         // 显示type
-        mTvPuzzleMainTypeSelected = (TextView) findViewById(
-                R.id.tv_puzzle_main_type_selected);
-        mLayoutInflater = (LayoutInflater) getSystemService(
-                LAYOUT_INFLATER_SERVICE);
-        // mType view
-        mPopupView = mLayoutInflater.inflate(
-                R.layout.xpuzzle_main_type_selected, null);
-        mTvType2 = (TextView) mPopupView.findViewById(R.id.tv_main_type_2);
-        mTvType3 = (TextView) mPopupView.findViewById(R.id.tv_main_type_3);
-        mTvType4 = (TextView) mPopupView.findViewById(R.id.tv_main_type_4);
-        // 监听事件
-        mTvType2.setOnClickListener(this);
-        mTvType3.setOnClickListener(this);
-        mTvType4.setOnClickListener(this);
+        mTvPuzzleMainTypeSelected = (LinearLayout) findViewById(
+                R.id.ll_puzzle_main_spinner);
+        mTypeText = (TextView) findViewById(R.id.tv_puzzle_main_type_selected);
+        tvCancel = (TextView) findViewById(R.id.tv_cancel);
+        tvOk = (TextView) findViewById(R.id.tv_ok);
+        linearLayout = (LinearLayout) findViewById(R.id.layout_wheel);
+        wheelView = (WheelView) findViewById(R.id.wheel_sku);
+        mask = findViewById(R.id.layout_mask);
+
+        tvCancel.setOnClickListener(this);
+        tvOk.setOnClickListener(this);
+        types = new ArrayList<>();
+        types.add("2 X 2");
+        types.add("3 X 3");
+        types.add("4 X 4");
+        wheelView.setAdapter(new WheelSkuAdapter(types));
+        wheelView.setCurrentItem(0);
+        showPopupWindow(false);
+
+    }
+
+    private void showPopupWindow(boolean show) {
+        if (show) {
+            linearLayout.setVisibility(View.VISIBLE);
+            mask.setVisibility(View.VISIBLE);
+        } else {
+            linearLayout.setVisibility(View.GONE);
+            mask.setVisibility(View.GONE);
+        }
     }
 
     /**
@@ -252,23 +235,30 @@ public class MainActivity extends Activity implements OnClickListener {
      */
     @Override
     public void onClick(View v) {
+        isSku = !isSku;
+        showPopupWindow(isSku);
         switch (v.getId()) {
-            // Type
-            case R.id.tv_main_type_2:
-                mType = 2;
-                mTvPuzzleMainTypeSelected.setText("2 X 2");
+            case R.id.tv_cancel:
                 break;
-            case R.id.tv_main_type_3:
-                mType = 3;
-                mTvPuzzleMainTypeSelected.setText("3 X 3");
+            case R.id.tv_ok:
+                mType = wheelView.getCurrentItem() + 2;
+                mTypeText.setText(types.get(mType-2));
                 break;
-            case R.id.tv_main_type_4:
-                mType = 4;
-                mTvPuzzleMainTypeSelected.setText("4 X 4");
-                break;
-            default:
+            case R.id.ll_puzzle_main_spinner:
                 break;
         }
-        mPopupWindow.dismiss();
+    }
+
+
+    @Override
+    public void onStart() {
+        super.onStart();
+
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+
     }
 }
