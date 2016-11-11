@@ -27,6 +27,8 @@ public class GridPicListAdapter extends BaseAdapter {
     private List<String> picList;
     private Context context;
 
+
+
     public GridPicListAdapter(Context context, List<String> picList) {
         this.context = context;
         this.picList = picList;
@@ -57,8 +59,8 @@ public class GridPicListAdapter extends BaseAdapter {
             iv_pic_item = new ImageView(context);
             // 设置布局 图片
             iv_pic_item.setLayoutParams(new GridView.LayoutParams(
-                    width/4-20*density,
-                    height/4-60 * density));
+                    width / 4 - 20 * density,
+                    height / 4 - 60 * density));
             // 设置显示比例类型
             iv_pic_item.setScaleType(ImageView.ScaleType.FIT_XY);
         } else {
