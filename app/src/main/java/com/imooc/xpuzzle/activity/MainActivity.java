@@ -2,6 +2,7 @@ package com.imooc.xpuzzle.activity;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
@@ -71,6 +72,12 @@ public class MainActivity extends Activity implements OnClickListener {
     private int mType = 2;
     // 本地图册、相机选择
     private String[] mCustomItems = new String[]{"本地图册", "相机拍照"};
+
+
+    @Override
+    protected Dialog onCreateDialog(int id) {
+        return super.onCreateDialog(id);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
